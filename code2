@@ -1,0 +1,31 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/add', methods=['GET'])
+def add_numbers():
+    """
+    处理 GET 请求，接收两个数字并返回它们的和。
+    """
+    try:
+        num1 = request.args.get('num1')
+        num2 = request.args.get('num2')
+
+    
+        num1 = float(num1)
+        num2 = float(num2)
+
+        result = num1 + num2
+        return jsonify({"result": result})
+
+    except ValueError:
+      
+        return jsonify({"error": "Invalid input, please provide two numbers."}), 400
+
+    except Exception as e:
+ 
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+ 
+    app.run(debug=True)
